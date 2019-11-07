@@ -1,0 +1,3 @@
+com.cvnavi.schduler.proxy.HttpClientCrawler
+com.cvnavi.schduler.proxy.BrowserCrawler
+com.cvnavi.schduler.proxy.ProxyFilterTask
