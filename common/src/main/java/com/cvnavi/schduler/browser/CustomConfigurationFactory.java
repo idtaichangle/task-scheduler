@@ -2,8 +2,6 @@ package com.cvnavi.schduler.browser;
 
 import java.io.File;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -25,7 +23,7 @@ import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
  */
 public class CustomConfigurationFactory extends ConfigurationFactory {
 	static {
-		setCatalinaHome();
+		setSchedulerHome();
 	}
 
 	static Configuration createConfiguration(final String name, ConfigurationBuilder<BuiltConfiguration> builder) {
@@ -48,8 +46,8 @@ public class CustomConfigurationFactory extends ConfigurationFactory {
 
 		AppenderComponentBuilder rollingFileBuilder = builder
 				.newAppender("RollingFile", RollingFileAppender.PLUGIN_NAME)
-				.addAttribute("fileName", "${sys:catalina.home}/logs/browser.log")
-				.addAttribute("filePattern", "${sys:catalina.home}/logs/browser-%d{yyyy-MM-dd}.log.gz")
+				.addAttribute("fileName", "${sys:SCHEDULER_HOME}/logs/browser.log")
+				.addAttribute("filePattern", "${sys:SCHEDULER_HOME}/logs/browser-%d{yyyy-MM-dd}.log.gz")
 				.add(layoutBuilder).addComponent(triggeringPolicy);
 		builder.add(rollingFileBuilder);
 
@@ -75,23 +73,16 @@ public class CustomConfigurationFactory extends ConfigurationFactory {
 		return new String[] { "*" };
 	}
 
-	static void setCatalinaHome() {
-		String key = "catalina.home";
-		String catalinaHome = null;//"C:\\Develop\\apache-tomcat-8.5.9";
-		if (System.getProperty(key) == null) {
-			catalinaHome = System.getenv("catalina.home");
-			if (catalinaHome == null) { 
-				File current = new File(
-						CustomConfigurationFactory.class.getProtectionDomain().getCodeSource().getLocation().getFile());
-				File home=current.getParentFile().getParentFile().getParentFile().getParentFile();
-				String logs=home+File.separator+"logs";
-				if(Files.exists(Paths.get(logs))){
-					catalinaHome=home.getAbsolutePath();
-				}else{
-					catalinaHome=current.getAbsolutePath();
-				}
+	static void setSchedulerHome() {
+		String SCHEDULER_HOME=null;
+		if (System.getProperty("SCHEDULER_HOME") == null) {
+			String file=CustomConfigurationFactory.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+			if(file.endsWith(".jar")){
+				SCHEDULER_HOME=new File(file).getParentFile().getParent();
+			}else if(file.endsWith("/classes/")){
+				SCHEDULER_HOME=new File(file).getParent();
 			}
-			System.setProperty(key, catalinaHome);
+			System.setProperty("SCHEDULER_HOME",SCHEDULER_HOME);
 		}
 	}
 }

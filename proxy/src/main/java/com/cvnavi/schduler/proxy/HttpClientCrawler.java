@@ -4,7 +4,6 @@ import com.cvnavi.schduler.task.ScheduleAnnotation;
 import com.cvnavi.schduler.util.Header;
 import com.cvnavi.schduler.util.HttpUtil;
 import com.cvnavi.schduler.util.ResourceReader;
-import com.cvnavi.schduler.web.WebContextCleanup;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -63,7 +62,6 @@ public class HttpClientCrawler extends AbstractProxyCrawler {
 		connectionManager.setMaxTotal(200);
 		connectionManager.setDefaultMaxPerRoute(20);
 		httpclient = HttpClients.custom().setConnectionManager(connectionManager).build();
-		WebContextCleanup.registeCloseable(httpclient);
 	}
 
 	protected synchronized String sendHttp(HttpRequestBase requestMethod, HashMap<String, String> header,

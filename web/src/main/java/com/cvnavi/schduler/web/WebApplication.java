@@ -16,6 +16,10 @@ public class WebApplication /*implements ServletContextListener*/{
 
     public static String SCHEDULER_HOME;
     static {
+        setHome();
+    }
+
+    public static void setHome(){
         if(System.getProperty("SCHEDULER_HOME")!=null){
             SCHEDULER_HOME=System.getProperty("SCHEDULER_HOME");
         }else{
@@ -38,7 +42,6 @@ public class WebApplication /*implements ServletContextListener*/{
 
 
     public static void main(String[] args)throws Exception {
-        Class.forName("com.cvnavi.schduler.browser.BrowserService");
         SpringApplication.run(WebApplication.class, args);
         DbChecker.checkDatabase();
         WebBackgroundTaskScheduler.getInstance().startScheduler();
@@ -47,12 +50,4 @@ public class WebApplication /*implements ServletContextListener*/{
         contextValid = true;
         log.info("============spring started."+"============");
     }
-
-
-//    public void contextDestroyed(ServletContextEvent servletContextEvent) {
-//        contextValid = false;
-//        WebBackgroundTaskScheduler.getInstance().stopScheduler();
-//        DbChecker.closeDatabase();
-//        WebContextCleanup.doClose();
-//    }
 }

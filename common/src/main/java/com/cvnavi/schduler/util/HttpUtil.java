@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import javax.net.ssl.SSLContext;
 
 import com.cvnavi.schduler.proxy.ProxyProvider;
-import com.cvnavi.schduler.web.WebContextCleanup;
+import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
@@ -53,9 +53,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+@Log4j2
 public class HttpUtil {
-
-	static Logger log = LogManager.getLogger(HttpUtil.class);
 
 	public static HttpHost RANDOM_PROXY = new HttpHost("0.0.0.0");
 
@@ -81,7 +80,6 @@ public class HttpUtil {
 		connectionManager.setDefaultMaxPerRoute(20);
 
 		httpclient = HttpClients.custom().setConnectionManager(connectionManager).build();
-		WebContextCleanup.registeCloseable(httpclient);
 
 	}
 

@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
  *
  */
 
-@ScheduleAnnotation(begin = "07:30:00",end = "23:50:10",period = 483000)
+@ScheduleAnnotation(begin = "07:30:00",end = "03:50:10",period = 483000)
 public class BrowserCrawler extends AbstractProxyCrawler {
 
 	static String[] urls = ResourceReader.readLines("/proxy_sites2.txt").toArray(new String[0]);

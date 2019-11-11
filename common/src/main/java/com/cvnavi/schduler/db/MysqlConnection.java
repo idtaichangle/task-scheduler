@@ -1,8 +1,8 @@
 package com.cvnavi.schduler.db;
 
 import com.cvnavi.schduler.config.Config;
-import com.cvnavi.schduler.web.WebContextCleanup;
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,9 +11,9 @@ import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Log4j2
 public class MysqlConnection extends DBConnection{
 
-    static Logger log= LogManager.getLogger(MysqlConnection.class);
     protected static Connection con;
     /**
      * 获取数据库连接。使用完毕后，可以不用关闭连接。web app销毁时会关闭连接。
@@ -25,7 +25,6 @@ public class MysqlConnection extends DBConnection{
             if (con == null || con.isClosed()) {
                 Class.forName(Config.dbDriver);
                 con = DriverManager.getConnection(Config.dbUrl, Config.dbUser, Config.dbPassword);
-                WebContextCleanup.registeCloseable(con);
             }
         } catch (Exception e) {
             log.error(e);
@@ -33,7 +32,6 @@ public class MysqlConnection extends DBConnection{
                 try {
                     createDatabase();
                     con = DriverManager.getConnection(Config.dbUrl, Config.dbUser, Config.dbPassword);
-                    WebContextCleanup.registeCloseable(con);
                 } catch (SQLException e1) {
                     log.error(e1);
                 }

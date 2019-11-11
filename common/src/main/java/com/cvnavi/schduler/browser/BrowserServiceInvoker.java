@@ -7,24 +7,17 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.cvnavi.schduler.web.WebContextCleanup;
 import com.cvnavi.schduler.task.AbstractDailyTask;
 import com.cvnavi.schduler.task.Schedule;
 import com.cvnavi.schduler.util.CmdExecutor;
 import com.cvnavi.schduler.util.JavaExecutor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpHost;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+@Log4j2
 public class BrowserServiceInvoker  extends AbstractDailyTask implements AutoCloseable {
-	
-	static Logger log = LogManager.getLogger(BrowserServiceInvoker.class);
-
-	static {
-		WebContextCleanup.registeCloseable(new BrowserServiceInvoker());
-	}
 
 	static boolean browserServiceRunning = false;
 	static Socket socket = null;
@@ -67,7 +60,7 @@ public class BrowserServiceInvoker  extends AbstractDailyTask implements AutoClo
 				socket = new Socket("127.0.0.1", 55536);
 				browserServiceRunning = true;
 				socket.close();
-				break;	
+				break;
 			}catch(Exception ex){}
 		}
 		if(!browserServiceRunning){
@@ -114,33 +107,6 @@ public class BrowserServiceInvoker  extends AbstractDailyTask implements AutoClo
 		return "";
 	}
 
-//	public static String loginMarinecircle() {
-//		try {
-//			String cmd = "cmd=" + BrowserService.CMD_LOGIN_MARINE_CIRCLE;
-//			HttpHost proxy = ProxyProvider.getRandomProxy();
-//			if (proxy != null) {
-//				cmd += "&proxy=" + URLEncoder.encode(proxy.getHostName() + ":" + proxy.getPort(), "UTF-8");
-//			}
-//			return sendCmd(cmd);
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//		return "";
-//	}
-//
-//	public static String loginShipxy(String userName, String password) {
-//		try {
-//			String cmd = "cmd=" + BrowserService.CMD_LOGIN_SHIPXY + "&userName=" + userName + "&password=" + password;
-//			HttpHost proxy = ProxyProvider.getRandomProxy();
-//			if (proxy != null) {
-//				cmd += "&proxy=" + URLEncoder.encode(proxy.getHostName() + ":" + proxy.getPort(), "UTF-8");
-//			}
-//			return sendCmd(cmd);
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//		return "";
-//	}
 
 	public static String visitePage(String url, String method,HttpHost proxy) {
 		return visitePage(url,method,proxy,null,20000,null);
@@ -179,14 +145,7 @@ public class BrowserServiceInvoker  extends AbstractDailyTask implements AutoClo
 	 */
 	public static synchronized void startBrowserService(){
 		log.info("start browser service");
-		String property = null;
-		String p = System.getenv("catalina.home");
-		if (p == null) {
-			p = System.getProperty("catalina.home");
-		}
-		if (p != null) {
-			property = "catalina.home=" + p+" -Xms256m -Xmx512m ";
-		}
+		String property = "SCHEDULER_HOME=" + System.getProperty("SCHEDULER_HOME")+" -Xms256m -Xmx512m ";
 		JavaExecutor.runMainClass(BrowserStartup.class.getName(), property);
 	}
 	

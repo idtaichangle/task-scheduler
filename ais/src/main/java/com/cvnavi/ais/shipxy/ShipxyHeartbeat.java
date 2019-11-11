@@ -23,7 +23,7 @@ import java.util.HashMap;
  * @author lixy
  */
 @Log4j2
-@ScheduleAnnotation(begin = "00:00:00",end = "23:59:59",period = 290000)
+@ScheduleAnnotation(begin = "00:00:00",end = "03:59:59",period = 290000)
 public class ShipxyHeartbeat extends AbstractDailyTask {
 	
 	public static final String SCODE="Scode";

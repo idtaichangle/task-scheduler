@@ -1,7 +1,7 @@
 package com.cvnavi.schduler.db;
 
 import com.cvnavi.schduler.config.Config;
-import com.cvnavi.schduler.web.WebContextCleanup;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,9 +12,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
+@Log4j2
 public class DerbyConnection extends DBConnection {
 
-    static Logger log= LogManager.getLogger(DerbyConnection.class);
     protected static Connection con;
     /**
      * 获取数据库连接。使用完毕后，可以不用关闭连接。web app销毁时会关闭连接。
@@ -27,7 +27,6 @@ public class DerbyConnection extends DBConnection {
                 System.setProperty("derby.system.home", System.getProperty("user.home")+ File.separator+".derby");
                 Class.forName(Config.dbDriver);
                 con = DriverManager.getConnection(Config.dbUrl, Config.dbUser, Config.dbPassword);
-                WebContextCleanup.registeCloseable(con);
             }
         } catch (Exception e) {
             log.error(e);

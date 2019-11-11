@@ -2,7 +2,6 @@ package com.cvnavi.schduler.proxy;
 
 import java.io.IOException;
 
-import com.cvnavi.schduler.web.WebContextCleanup;
 import com.cvnavi.schduler.proxy.config.Config;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -41,7 +40,6 @@ public class ProxyTestTask implements Runnable {
 	static{
 		SocketConfig socketConfig=SocketConfig.custom().setSoTimeout(50000).build();
 		cm.setDefaultSocketConfig(socketConfig);
-		WebContextCleanup.registeCloseable(httpclient);
 	}
 
 	private HttpHost proxy;

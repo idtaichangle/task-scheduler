@@ -11,6 +11,7 @@
         <module>proxy</module>
 		<module>ais</module>
 		<module>web</module>
+		<module>task</module>
 	</modules>
 
 	<properties>
