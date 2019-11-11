@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@ScheduleAnnotation(begin = "00:30:00",end = "15:43:30",period = 600000)
+@ScheduleAnnotation(begin = "00:30:00",end = "00:30:30",period = 600000)
 @Log4j2
 public class ChinaMobileTask extends AbstractDailyTask {
 
@@ -72,7 +72,7 @@ public class ChinaMobileTask extends AbstractDailyTask {
         HttpPost httpPost = new HttpPost("https://professorhe.sh.chinamobile.com/datau/datau/getSecCode.du");
         httpPost.addHeader("User-Agent",USER_AGENT);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("secToken", "Z0gaexf5i-NXDdhB07d7nNakvaxteXW5w3U8LZEuU1fe2whNZmihOa-jDZlClj75"));
+        nvps.add(new BasicNameValuePair("secToken", token));
         httpPost.setEntity(new UrlEncodedFormEntity(nvps));
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
