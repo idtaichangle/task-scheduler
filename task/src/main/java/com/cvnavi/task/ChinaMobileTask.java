@@ -2,32 +2,26 @@ package com.cvnavi.task;
 
 import com.cvnavi.schduler.task.AbstractDailyTask;
 import com.cvnavi.schduler.task.ScheduleAnnotation;
+import com.cvnavi.schduler.util.HttpUtil;
 import lombok.extern.log4j.Log4j2;
-import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Random;
 
-@ScheduleAnnotation(begin = "00:30:00",end = "00:30:30",period = 600000)
+@ScheduleAnnotation(begin = "06:30:00",end = "06:30:30",period = 600000)
 @Log4j2
 public class ChinaMobileTask extends AbstractDailyTask {
 
     public static final String USER_AGENT="Mozilla/5.0 (Linux; Android 5.1.1; DUK-AL20 Build/LMY48Z) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Safari/537.36 shydhn/2.3.0";
-
+    static HashMap<String,String> header=new HashMap<>();
+    static {
+        header.put("User-Agent",USER_AGENT);
+    }
 
     public static final String[] SEC_TOKENS={
-            "Z0gaexf5i-NXDdhB07d7nNakvaxteXW5w3U8LZEuU1fe2whNZmihOa-jDZlClj75",
-            "4hIQmIVFtU06AdyMQikRGH87n2XKVvQHebGeQxM87277hSM3iZ3kEK3aE-RM6Ug0",
-            "QLJyLvA82UaZp6UdnaVEfRTEJrWwRbKcsHYR4vJ8_MUKIXgmjYXUKw0Ev080xlGD",
+            "L1ZVFwbxBT2bL3TU4HQRM0UPvQHki2IvFSuQuq5qHR_lYH45UygAXOdj-iUApjmc",
+            "ZYoql99QLNpcSZXDHZWHH8iFJpsfKqiuczVJlxCI4OE3nW0YYSLyh4a-F8JvTxYQ",
+            "bhuCvt-Jq-EFdE30LtKGEoNoIAK0fbO2IrJKAPW42x9gRf_ook0vZDQbcOHsEF_V",
             "HsDXWkrUXFrdwmYCMKzNlWLteJ8NnZ3HHByph0-HQldL8BHHlADm5QyCFC04HMd0"
     };
 
@@ -35,60 +29,40 @@ public class ChinaMobileTask extends AbstractDailyTask {
 
     @Override
     public void doTask() {
-        try {
-            for(String token:SEC_TOKENS){
-                String sSOCode=getSsoCode(token);
+        for(String token:SEC_TOKENS){
+            String sSOCode=getSsoCode(token);
+            if(sSOCode!=null){
                 for(String s:TASK_ID){
                     doRequest(sSOCode,s);
-                    Thread.sleep(new Random().nextInt(3000));
+                    try {
+                        Thread.sleep(new Random().nextInt(3000));
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
-        } catch (Exception e) {
-           log.error(e.getMessage(),e);
-        }
-    }
-    public static void doRequest(String loginSign,String taskId) throws Exception {
-        HttpPost httpPost = new HttpPost("https://professorhe.sh.chinamobile.com/datau/datau/xrPneumaShangBao.du?eventId=1114647&channelId=hn&loginSign="+loginSign);
-        httpPost.addHeader("User-Agent",USER_AGENT);
-        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("taskId", taskId));
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-
-        CloseableHttpResponse response2 = httpclient.execute(httpPost);
-
-        try {
-            HttpEntity entity2 = response2.getEntity();
-            String result=EntityUtils.toString(entity2);
-            log.info(result);
-            EntityUtils.consume(entity2);
-        } finally {
-            response2.close();
         }
     }
 
-    public static String getSsoCode(String token) throws Exception {
-        String sSOCode=null;
-        HttpPost httpPost = new HttpPost("https://professorhe.sh.chinamobile.com/datau/datau/getSecCode.du");
-        httpPost.addHeader("User-Agent",USER_AGENT);
-        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("secToken", token));
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+    public static void doRequest(String loginSign,String taskId){
+        String url="https://professorhe.sh.chinamobile.com/datau/datau/xrPneumaShangBao.du?eventId=1114647&channelId=hn&loginSign="+loginSign;
+        HashMap<String,String> params=new HashMap<>();
+        params.put("taskId", taskId);
+        String result=HttpUtil.doHttpPost(url,params,header,null);
+        log.info(result);
+    }
 
-        CloseableHttpResponse response2 = httpclient.execute(httpPost);
-
-        try {
-            HttpEntity entity2 = response2.getEntity();
-            String result=EntityUtils.toString(entity2);
+    public static String getSsoCode(String token){
+        String url="https://professorhe.sh.chinamobile.com/datau/datau/getSecCode.du";
+        HashMap<String,String> params=new HashMap<>();
+        params.put("secToken", token);
+        String result=HttpUtil.doHttpPost(url,params,header,null);
+        if(result.contains("数据正确")){//{"sSOCode":"6BDEB4EE36ED682A2C699189F6E6897E","code":"0000","msg":"数据正确","mobile":"15000337120"}
             log.info(result);
-            sSOCode=result.substring(12,44);
-            EntityUtils.consume(entity2);
-
-        } finally {
-            response2.close();
+            return result.substring(12,44);
+        }else{//{"code":"1004","msg":"解密失败"}
+            log.error(result);
+            return null;
         }
-        return sSOCode;
     }
 
 }
