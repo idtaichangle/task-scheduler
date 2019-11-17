@@ -5,10 +5,15 @@ import com.cvnavi.schduler.task.ScheduleAnnotation;
 import com.cvnavi.schduler.util.HttpUtil;
 import lombok.extern.log4j.Log4j2;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-@ScheduleAnnotation(begin = "06:30:00",end = "06:30:30",period = 600000)
+@ScheduleAnnotation(begin = "06:30:00",end = "23:30:30",period = 7200000)
 @Log4j2
 public class ChinaMobileTask extends AbstractDailyTask {
 
@@ -18,12 +23,23 @@ public class ChinaMobileTask extends AbstractDailyTask {
         header.put("User-Agent",USER_AGENT);
     }
 
-    public static final String[] SEC_TOKENS={
-            "L1ZVFwbxBT2bL3TU4HQRM0UPvQHki2IvFSuQuq5qHR_lYH45UygAXOdj-iUApjmc",
-            "ZYoql99QLNpcSZXDHZWHH8iFJpsfKqiuczVJlxCI4OE3nW0YYSLyh4a-F8JvTxYQ",
-            "bhuCvt-Jq-EFdE30LtKGEoNoIAK0fbO2IrJKAPW42x9gRf_ook0vZDQbcOHsEF_V",
-            "HsDXWkrUXFrdwmYCMKzNlWLteJ8NnZ3HHByph0-HQldL8BHHlADm5QyCFC04HMd0"
-    };
+    public static final ArrayList<String> SEC_TOKENS=new ArrayList<>();
+    static {
+        try{
+            InputStream stream= ChinaMobileTask.class.getResourceAsStream("/cm-sec-token.properties");
+            if(stream!=null){
+                BufferedReader br=new BufferedReader(new InputStreamReader(stream));
+                String line=null;
+                while((line=br.readLine())!=null){
+                    SEC_TOKENS.add(line);
+                }
+                br.close();
+                stream.close();
+            }
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+        }
+    }
 
     public static final String[] TASK_ID={"1115073","1115074","1118466","1115076","1116894","1115077","1118090","1118091","1118823","1115078","1115075"};
 
