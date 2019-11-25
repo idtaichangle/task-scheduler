@@ -1,5 +1,6 @@
 package com.cvnavi.schduler.proxy;
 
+import com.cvnavi.schduler.proxy.html.ProxyExtracter;
 import com.cvnavi.schduler.task.ScheduleAnnotation;
 import com.cvnavi.schduler.util.Header;
 import com.cvnavi.schduler.util.HttpUtil;
@@ -21,6 +22,8 @@ import org.apache.logging.log4j.Level;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 通过HttpClient抓取代理ip。
@@ -29,7 +32,7 @@ import java.util.Map.Entry;
  *
  */
 
-@ScheduleAnnotation(begin = "07:30:30",end="22:00:00",period = 183000)
+@ScheduleAnnotation(begin = "07:30:30",end="23:50:00",period = 183000)
 @Log4j2
 public class HttpClientCrawler extends AbstractProxyCrawler {
 
@@ -53,8 +56,23 @@ public class HttpClientCrawler extends AbstractProxyCrawler {
 		if (s.length() == 0) {
 			s = sendHttp(new HttpGet(url), header, null, Level.DEBUG);
 		}
+		if(url.contains("proxy.mimvp.com")){
+			s=ocrForMimvp(s);
+		}
 		return s;
 	}
+
+	static Pattern p1 = Pattern.compile(ProxyExtracter.IP_PATTERN);
+
+	public String ocrForMimvp(String s){
+		Matcher m = p1.matcher(s);
+		while (m.find()) {
+			String ip=m.group();
+
+		}
+		return s;
+	}
+
 
 	static CloseableHttpClient httpclient = null;
 	static {

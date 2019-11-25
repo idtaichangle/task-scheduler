@@ -1,7 +1,7 @@
 ######## refresh every 10 minute
 
 http://www.xicidaili.com/nn/
-#http://www.xicidaili.com/nt/  #transparent
+http://www.xicidaili.com/nt/
 http://www.xicidaili.com/wt/
 http://proxy.mimvp.com/free.php?proxy=in_tp
 http://proxy.mimvp.com/free.php?proxy=in_hp
