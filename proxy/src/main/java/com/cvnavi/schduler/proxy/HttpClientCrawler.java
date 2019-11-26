@@ -4,6 +4,7 @@ import com.cvnavi.schduler.proxy.html.ProxyExtracter;
 import com.cvnavi.schduler.task.ScheduleAnnotation;
 import com.cvnavi.schduler.util.Header;
 import com.cvnavi.schduler.util.HttpUtil;
+import com.cvnavi.schduler.util.OcrUtil;
 import com.cvnavi.schduler.util.ResourceReader;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpEntity;
@@ -19,7 +20,12 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.Level;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -65,12 +71,21 @@ public class HttpClientCrawler extends AbstractProxyCrawler {
 	static Pattern p1 = Pattern.compile(ProxyExtracter.IP_PATTERN);
 
 	public String ocrForMimvp(String s){
+	    String result="";
 		Matcher m = p1.matcher(s);
 		while (m.find()) {
 			String ip=m.group();
-
+            int index=s.indexOf("<img",m.end())+9;
+            String img=s.substring(index,s.indexOf(" />",m.end()));
+            String url="https://proxy.mimvp.com/"+img;
+            try {
+                BufferedImage bi= ImageIO.read(new URL(url));
+                String port=OcrUtil.doOcr(bi);
+                result+=ip+":"+port+"\n";
+            } catch (IOException e) {
+            }
 		}
-		return s;
+		return result;
 	}
 
 
@@ -121,5 +136,4 @@ public class HttpClientCrawler extends AbstractProxyCrawler {
 		}
 		return result;
 	}
-
 }
