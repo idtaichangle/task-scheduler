@@ -1,17 +1,15 @@
-package com.cvnavi.task;
+package com.cvnavi.task.cm;
 
 import com.cvnavi.schduler.task.AbstractDailyTask;
 import com.cvnavi.schduler.task.ScheduleAnnotation;
 import com.cvnavi.schduler.util.HttpUtil;
+import com.cvnavi.task.ProxyServer;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 @ScheduleAnnotation(begin = "06:30:00",end = "23:30:30",period = 7200000)
 @Log4j2
@@ -23,7 +21,7 @@ public class ChinaMobileTask extends AbstractDailyTask {
         header.put("User-Agent",USER_AGENT);
     }
 
-    public static final ArrayList<String> SEC_TOKENS=new ArrayList<>();
+    public static final Set<String> SEC_TOKENS=Collections.synchronizedSet(new HashSet<String>());;
     static {
         try{
             InputStream stream= ChinaMobileTask.class.getResourceAsStream("/cm-sec-token.properties");
@@ -45,6 +43,15 @@ public class ChinaMobileTask extends AbstractDailyTask {
 
     @Override
     public void doTask() {
+        if(ProxyServer.PROXY_RUNNING==false){
+            new Thread(ProxyServer::startProxy).start();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+            }
+        }
+        ArrayList<String> toBeRemove=new ArrayList<>();
+
         for(String token:SEC_TOKENS){
             String sSOCode=getSsoCode(token);
             if(sSOCode!=null){
@@ -55,8 +62,11 @@ public class ChinaMobileTask extends AbstractDailyTask {
                     } catch (InterruptedException e) {
                     }
                 }
+            }else{
+                toBeRemove.add(token);
             }
         }
+        SEC_TOKENS.removeAll(toBeRemove);//移除无效的token
     }
 
     public static void doRequest(String loginSign,String taskId){
