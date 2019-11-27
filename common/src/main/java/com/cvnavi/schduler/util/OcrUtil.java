@@ -17,7 +17,6 @@ public class OcrUtil {
 
     public static String doOcr(BufferedImage img) throws IOException {
         img=optimizeImg(img);
-        ImageIO.write(img,"png",new File("C:\\tmp\\o.png"));
         ITesseract te=new Tesseract();
         File tessDataFolder = LoadLibs.extractTessResources("tessdata");
         te.setDatapath(tessDataFolder.getAbsolutePath());
