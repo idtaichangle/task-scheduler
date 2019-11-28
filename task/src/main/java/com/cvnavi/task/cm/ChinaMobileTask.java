@@ -1,8 +1,8 @@
 package com.cvnavi.task.cm;
 
-import com.cvnavi.schduler.task.AbstractDailyTask;
-import com.cvnavi.schduler.task.ScheduleAnnotation;
-import com.cvnavi.schduler.util.HttpUtil;
+import com.cvnavi.scheduler.task.AbstractDailyTask;
+import com.cvnavi.scheduler.task.ScheduleAnnotation;
+import com.cvnavi.scheduler.util.HttpUtil;
 import com.cvnavi.task.ProxyServer;
 import lombok.extern.log4j.Log4j2;
 

@@ -1,11 +1,10 @@
 ######## refresh every 10 minute
 
-http://www.xicidaili.com/nn/
-http://www.xicidaili.com/nt/
-http://www.xicidaili.com/wt/
-http://proxy.mimvp.com/free.php?proxy=in_tp
-http://proxy.mimvp.com/free.php?proxy=in_hp
-http://www.iphai.com/
+https://www.xicidaili.com/nn/
+https://www.xicidaili.com/nt/
+https://www.xicidaili.com/wt/
+https://proxy.mimvp.com/freeopen.php
+http://www.iphaim.com/
 http://www.iphai.com/free/ng
 http://www.iphai.com/free/np
 #http://www.xsdaili.com/mfdl?type=1
@@ -15,6 +14,7 @@ https://www.kuaidaili.com/free/
 #https://www.kuaidaili.com/free/intr/ #transparent
 http://www.ip3366.net/
 http://www.ip3366.net/free/
+http://www.kxdaili.com/dailiip.html
 
 ######## refresh every 5 minute
 http://www.89ip.cn/tiqu.php?tqsl=30

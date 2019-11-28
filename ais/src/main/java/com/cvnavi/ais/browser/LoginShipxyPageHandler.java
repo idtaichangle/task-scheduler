@@ -1,6 +1,6 @@
 package com.cvnavi.ais.browser;
 
-import com.cvnavi.schduler.browser.DefaultPageHandler;
+import com.cvnavi.scheduler.browser.DefaultPageHandler;
 import com.teamdev.jxbrowser.chromium.BeforeURLRequestParams;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.Cookie;

@@ -1,6 +1,6 @@
 package com.cvnavi.ais;
 
-import com.cvnavi.schduler.base.KeyValue;
+import com.cvnavi.scheduler.base.KeyValue;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;

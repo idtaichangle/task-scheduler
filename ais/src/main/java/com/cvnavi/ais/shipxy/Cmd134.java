@@ -1,9 +1,9 @@
 package com.cvnavi.ais.shipxy;
 
 import com.cvnavi.ais.model.Ship;
-import com.cvnavi.schduler.util.Header;
-import com.cvnavi.schduler.util.HttpUtil;
-import com.cvnavi.schduler.util.LEDataInputStream;
+import com.cvnavi.scheduler.util.Header;
+import com.cvnavi.scheduler.util.HttpUtil;
+import com.cvnavi.scheduler.util.LEDataInputStream;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.ByteArrayInputStream;

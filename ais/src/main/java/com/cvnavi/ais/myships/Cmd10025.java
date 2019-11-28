@@ -1,8 +1,8 @@
 package com.cvnavi.ais.myships;
 
 import com.cvnavi.ais.model.Ship;
-import com.cvnavi.schduler.util.Header;
-import com.cvnavi.schduler.util.HttpUtil;
+import com.cvnavi.scheduler.util.Header;
+import com.cvnavi.scheduler.util.HttpUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;

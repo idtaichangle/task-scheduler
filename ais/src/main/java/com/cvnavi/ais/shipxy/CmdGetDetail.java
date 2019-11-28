@@ -1,7 +1,7 @@
 package com.cvnavi.ais.shipxy;
 
 import com.cvnavi.ais.model.Ship;
-import com.cvnavi.schduler.util.HttpUtil;
+import com.cvnavi.scheduler.util.HttpUtil;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

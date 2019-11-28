@@ -12,6 +12,7 @@
 		<module>ais</module>
 		<module>web</module>
 		<module>task</module>
+		<module>ocr</module>
 	</modules>
 
 	<build>

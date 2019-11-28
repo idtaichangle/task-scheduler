@@ -1,9 +1,9 @@
 package com.cvnavi.ais.myships;
 
 import com.cvnavi.ais.model.Track;
-import com.cvnavi.schduler.util.Header;
-import com.cvnavi.schduler.util.HttpUtil;
-import com.cvnavi.schduler.util.ZipUtil;
+import com.cvnavi.scheduler.util.Header;
+import com.cvnavi.scheduler.util.HttpUtil;
+import com.cvnavi.scheduler.util.ZipUtil;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
 

@@ -2,18 +2,16 @@ package com.cvnavi.ais.shipxy;
 
 import com.cvnavi.ais.Config;
 import com.cvnavi.ais.browser.LoginShipxyPageHandler;
-import com.cvnavi.schduler.base.KeyValue;
-import com.cvnavi.schduler.browser.BrowserServiceInvoker;
-import com.cvnavi.schduler.proxy.ProxyProvider;
-import com.cvnavi.schduler.task.AbstractDailyTask;
-import com.cvnavi.schduler.task.Schedule;
-import com.cvnavi.schduler.task.ScheduleAnnotation;
-import com.cvnavi.schduler.util.Header;
-import com.cvnavi.schduler.util.HttpUtil;
+import com.cvnavi.scheduler.base.KeyValue;
+import com.cvnavi.scheduler.browser.BrowserServiceInvoker;
+import com.cvnavi.scheduler.proxy.ProxyProvider;
+import com.cvnavi.scheduler.task.AbstractDailyTask;
+import com.cvnavi.scheduler.task.Schedule;
+import com.cvnavi.scheduler.task.ScheduleAnnotation;
+import com.cvnavi.scheduler.util.Header;
+import com.cvnavi.scheduler.util.HttpUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
