@@ -1,6 +1,6 @@
 package com.cvnavi;
 
-import com.cvnavi.scheduler.cm.ChinaMobileTask;
+import com.cvnavi.scheduler.task.cm.ChinaMobileTask;
 import com.cvnavi.scheduler.web.WebApplication;
 
 public class Main {

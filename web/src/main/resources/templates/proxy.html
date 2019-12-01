@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>代理</title>
+
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<table>
+    <tr th:each="item : ${proxies}" >
+        <td th:text="${item.hostName}+':'+${item.port}"></td>
+    </tr>
+</table>
+</body>
+</html>
