@@ -33,7 +33,7 @@ public class ProxyExtracter {
         while (m.find()) {
             String ip=m.group();
             String port=null;
-            Matcher m2=p2.matcher(text.substring(m.end()+1));
+            Matcher m2=p2.matcher(text.substring(m.end()));
             if(m2.find()){
                 port=m2.group();
             }
