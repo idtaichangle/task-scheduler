@@ -30,5 +30,10 @@
             <artifactId>ocr</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.cvnavi.scheduler</groupId>
+            <artifactId>task</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

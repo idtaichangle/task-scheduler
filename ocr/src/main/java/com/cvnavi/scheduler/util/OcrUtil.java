@@ -26,7 +26,7 @@ public class OcrUtil {
 
         try {
             String s=te.doOCR(img);
-            log.info("ocr result:"+s);
+            log.debug("ocr result:"+s);
             return  s;
         } catch (TesseractException e) {
             log.error(e.getMessage(),e);

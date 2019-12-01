@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.cvnavi.scheduler.task.AbstractDailyTask;
-import com.cvnavi.scheduler.task.Schedule;
 import com.cvnavi.scheduler.util.CmdExecutor;
 import com.cvnavi.scheduler.util.JavaExecutor;
 import lombok.extern.log4j.Log4j2;
@@ -17,35 +15,35 @@ import org.apache.http.HttpHost;
 import org.codehaus.jackson.map.ObjectMapper;
 
 @Log4j2
-public class BrowserServiceInvoker  extends AbstractDailyTask implements AutoCloseable {
+public class BrowserServiceInvoker  /*extends AbstractDailyTask */implements AutoCloseable {
 
 	static boolean browserServiceRunning = false;
 	static Socket socket = null;
 
 
-	@Override
-	public void doTask() {
-	}
-
-	@Override
-	public void interruptTask() {
-		try {
-			socket.close();
-		} catch (IOException e) {
-		}
-	}
-
-	@Override
-	protected void scheduleBeginEvent(Schedule s) {
-		//重启浏览器
-		stopBrowserService();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-		}
-		killBrowserService();
-		startBrowserService();
-	}
+//	@Override
+//	public void doTask() {
+//	}
+//
+//	@Override
+//	public void interruptTask() {
+//		try {
+//			socket.close();
+//		} catch (IOException e) {
+//		}
+//	}
+//
+//	@Override
+//	protected void scheduleBeginEvent(Schedule s) {
+//		//重启浏览器
+//		stopBrowserService();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//		}
+//		killBrowserService();
+//		startBrowserService();
+//	}
 
 	static void testOrStartServer() {
 		browserServiceRunning=false;
