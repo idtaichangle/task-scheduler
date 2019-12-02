@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
  *
  */
 
-@ScheduleAnnotation(begin = "07:30:00",end = "03:50:10",period = 483000)
+@ScheduleAnnotation(begin = "07:30:00",end = "23:50:10",period = 483000)
 public class BrowserCrawler extends AbstractProxyCrawler {
 
 	static String[] urls = ResourceReader.readLines("/proxy_sites2.txt").toArray(new String[0]);
@@ -42,6 +42,9 @@ public class BrowserCrawler extends AbstractProxyCrawler {
 	public String getUrlContent(String url) {
 		HttpHost proxy= ProxyProvider.getRandomProxy();
 		String content=BrowserServiceInvoker.visitePage(url,"get",proxy);
+		if(content.contains("ERR_CONNECTION_RESET")||content.contains("您所请求的网址（URL）无法获取")){
+			content=BrowserServiceInvoker.visitePage(url,"get",null);
+		}
 		return content;
 	}
 

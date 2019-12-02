@@ -107,16 +107,21 @@ public class DefaultPageHandler extends ListenerAdapter {
 	public void loadComplete(Browser browser){
 		if(!loadComplete){
 			loadComplete=true;
-			if(browser!=null){
-				result = browser.getHTML();
-			}
-			try {
-				synchronized (lock) {
-					lock.notifyAll();
+			new Thread(()->{
+				try {
+					Thread.sleep(2000);
+
+					if(browser!=null){
+						result = browser.getHTML();
+					}
+
+					synchronized (lock) {
+						lock.notifyAll();
+					}
+				} catch (Exception ex) {
+					log.error(ex);
 				}
-			} catch (Exception ex) {
-				log.error(ex);
-			}
+			}).start();
 		}
 	}
 

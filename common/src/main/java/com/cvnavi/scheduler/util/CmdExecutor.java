@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 public class CmdExecutor {
 	static Logger log = LogManager.getLogger(CmdExecutor.class);
 
-	public static String[] prepareCmd(String cmd) {
+	public static String[] prepareCmd(String cmd, boolean requireDisplay) {
 
 		String cmdArray[] = null;
 
@@ -26,10 +26,10 @@ public class CmdExecutor {
 		if (os.toLowerCase().contains("windows")) {
 			cmdArray = new String[] { "cmd", "/c", cmd };
 		} else if (os.toLowerCase().equals("linux")) {
-			if (GraphicsEnvironment.isHeadless()) {
+			if(requireDisplay && GraphicsEnvironment.isHeadless()){
 				cmdArray = new String[] { "/bin/sh", "-c",
 						"xvfb-run --server-args=\"-screen 0 1024x768x24\" -a " + cmd };
-			} else {
+			}else{
 				cmdArray = new String[] { "/bin/sh", "-c", cmd };
 			}
 		}

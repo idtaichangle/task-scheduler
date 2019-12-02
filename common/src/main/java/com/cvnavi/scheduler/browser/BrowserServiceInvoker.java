@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
 
 import com.cvnavi.scheduler.util.CmdExecutor;
 import com.cvnavi.scheduler.util.JavaExecutor;
+import com.cvnavi.scheduler.util.ProcessUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpHost;
 
@@ -19,31 +19,6 @@ public class BrowserServiceInvoker  /*extends AbstractDailyTask */implements Aut
 
 	static boolean browserServiceRunning = false;
 	static Socket socket = null;
-
-
-//	@Override
-//	public void doTask() {
-//	}
-//
-//	@Override
-//	public void interruptTask() {
-//		try {
-//			socket.close();
-//		} catch (IOException e) {
-//		}
-//	}
-//
-//	@Override
-//	protected void scheduleBeginEvent(Schedule s) {
-//		//重启浏览器
-//		stopBrowserService();
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//		}
-//		killBrowserService();
-//		startBrowserService();
-//	}
 
 	static void testOrStartServer() {
 		browserServiceRunning=false;
@@ -85,7 +60,7 @@ public class BrowserServiceInvoker  /*extends AbstractDailyTask */implements Aut
 				System.arraycopy(buf, 0, temp, b.length, len);
 				b = temp;
 			}
-			String result = new String(b).trim();
+			String result = new String(b,"UTF-8").trim();
 			// System.out.println(result);
 
 			return result;
@@ -144,7 +119,7 @@ public class BrowserServiceInvoker  /*extends AbstractDailyTask */implements Aut
 	public static synchronized void startBrowserService(){
 		log.info("start browser service");
 		String property = "SCHEDULER_HOME=" + System.getProperty("SCHEDULER_HOME")+" -Xms256m -Xmx512m ";
-		JavaExecutor.runMainClass(BrowserStartup.class.getName(), property);
+		JavaExecutor.runMainClass(BrowserStartup.class.getName(), property,true);
 	}
 	
 	/**
@@ -177,18 +152,11 @@ public class BrowserServiceInvoker  /*extends AbstractDailyTask */implements Aut
 	 * 通过杀进程的方式关闭浏览器。
 	 */
 	public static synchronized void killBrowserService() {
+
 		log.info("kill browser service");
 		String pid = findBrowserServicePID();
 		if (pid != null) {
-			String os = System.getProperty("os.name");
-			String[] cmd=null;
-			if (os.toLowerCase().contains("windows")) {
-				cmd = CmdExecutor.prepareCmd("taskkill.exe /pid " + pid);
-			} else {
-				cmd = CmdExecutor.prepareCmd("kill -9  " + pid);
-			}
-			String output = CmdExecutor.execCmd(cmd);
-			log.debug(output);
+			ProcessHandle.of(Long.parseLong(pid)).ifPresent(ProcessHandle::destroy);
 		}
 	}
 	
@@ -196,13 +164,12 @@ public class BrowserServiceInvoker  /*extends AbstractDailyTask */implements Aut
 	 * 查询浏览器的进程号。
 	 */
 	public static synchronized String findBrowserServicePID() {
-		String[] cmd = CmdExecutor.prepareCmd("jps -l");
-		String output = CmdExecutor.execCmd(cmd);
-		// System.out.println(output);
-		Matcher m = Pattern.compile("[0-9]+(?= " + BrowserStartup.class.getName() + ")").matcher(output);
-		if (m.find()) {
-			return m.group(0);
+		for(Map.Entry e:ProcessUtil.jps().entrySet()){
+			if(e.getValue().equals(BrowserStartup.class.getName())){
+				return e.getKey().toString();
+			}
 		}
+
 		return null;
 	}
 

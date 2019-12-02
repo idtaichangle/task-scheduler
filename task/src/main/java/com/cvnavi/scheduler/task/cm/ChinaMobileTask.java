@@ -4,6 +4,7 @@ package com.cvnavi.scheduler.task.cm;
 import com.cvnavi.scheduler.task.AbstractDailyTask;
 import com.cvnavi.scheduler.task.ScheduleAnnotation;
 import com.cvnavi.scheduler.util.HttpUtil;
+import com.cvnavi.scheduler.util.ResourceReader;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.BufferedReader;
@@ -11,7 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
-@ScheduleAnnotation(begin = "06:30:00",end = "23:30:30",period = 7200000)
+@ScheduleAnnotation(begin = "06:30:00",end = "23:30:30",period = 14400000)
 @Log4j2
 public class ChinaMobileTask extends AbstractDailyTask {
 
@@ -23,20 +24,8 @@ public class ChinaMobileTask extends AbstractDailyTask {
 
     public static final Set<String> SEC_TOKENS=Collections.synchronizedSet(new HashSet<String>());;
     static {
-        try{
-            InputStream stream= ChinaMobileTask.class.getResourceAsStream("/cm-sec-token.properties");
-            if(stream!=null){
-                BufferedReader br=new BufferedReader(new InputStreamReader(stream));
-                String line=null;
-                while((line=br.readLine())!=null){
-                    SEC_TOKENS.add(line);
-                }
-                br.close();
-                stream.close();
-            }
-        }catch (Exception ex){
-            log.error(ex.getMessage());
-        }
+        List<String> lines=ResourceReader.readLines("/cm-sec-token.properties");
+        SEC_TOKENS.addAll(lines);
     }
 
     public static final String[] TASK_ID={"1115073","1115074","1118466","1115076","1116894","1115077","1118090","1118091","1118823","1115078","1115075"};
