@@ -1,6 +1,7 @@
 package com.cvnavi.scheduler.proxy;
 
 import com.cvnavi.scheduler.browser.BrowserServiceInvoker;
+import com.cvnavi.scheduler.proxy.html.ProxyExtracter;
 import com.cvnavi.scheduler.task.ScheduleAnnotation;
 import com.cvnavi.scheduler.util.ResourceReader;
 import org.apache.http.HttpHost;
@@ -60,14 +61,15 @@ public class BrowserCrawler extends AbstractProxyCrawler {
 		HashSet<HttpHost> set = new HashSet<>();
 
 		String s = getUrlContent(url);
-		String ip;
-		int port = Integer.parseInt(url.split("=")[1]);
-
-		Matcher m = p1.matcher(s);
-
-		while (m.find()) {
-			ip = m.group(0);
-			set.add(new HttpHost(ip, port));
+		HashSet<String> ip = ProxyExtracter.extractIP(s);
+		for(String i:ip){
+			set.add(new  HttpHost(i,80));
+			set.add(new  HttpHost(i,8080));
+			set.add(new  HttpHost(i,3128));
+			set.add(new  HttpHost(i,1080));
+			set.add(new  HttpHost(i,9999));
+			set.add(new  HttpHost(i,4216));
+			set.add(new  HttpHost(i,8118));
 		}
 		return set;
 	}

@@ -44,4 +44,26 @@ public class ProxyExtracter {
         }
         return  set;
     }
+
+    public static HashSet<String> extractIP(String html){
+        HashSet<String> set = new HashSet<>();
+        Document doc=Jsoup.parse(html);
+
+        doc.body().select("*[style*=display:none]").remove();
+        doc.body().select("*[style*=display: none]").remove();
+
+        HtmlToPlainText formatter = new HtmlToPlainText();
+        String text=formatter.getPlainText(doc);
+
+        Pattern p1 = Pattern.compile(IP_PATTERN);
+        Matcher m = p1.matcher(text);
+
+        while (m.find()) {
+            String ip=m.group();
+            if(ip!=null ){
+                set.add(ip);
+            }
+        }
+        return  set;
+    }
 }

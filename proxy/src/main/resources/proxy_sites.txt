@@ -3,17 +3,10 @@
 https://www.xicidaili.com/nn/
 https://www.xicidaili.com/nt/
 https://www.xicidaili.com/wt/
-https://proxy.mimvp.com/freeopen.php?proxy=in_hp
-https://proxy.mimvp.com/freeopen.php?proxy=in_tp
-https://proxy.mimvp.com/freeopen.php?proxy=in_socks
-https://proxy.mimvp.com/freeopen.php?proxy=out_hp
-https://proxy.mimvp.com/freeopen.php?proxy=out_tp
-https://proxy.mimvp.com/freeopen.php?proxy=out_socks
-http://www.iphaim.com/
+
 http://www.iphai.com/free/ng
-http://www.iphai.com/free/np
-#http://www.xsdaili.com/mfdl?type=1
-#http://www.xsdaili.com/mfdl?type=2 #transparent
+http://www.iphai.com/free/wg
+http://www.xsdaili.cn/dayProxy/ip/2204.html
 https://www.kuaidaili.com/proxylist/1/
 https://www.kuaidaili.com/free/
 #https://www.kuaidaili.com/free/intr/ #transparent
@@ -23,5 +16,5 @@ http://www.kxdaili.com/dailiip.html
 http://www.66ip.cn/
 http://www.66ip.cn/areaindex_33/1.html
 
-######## refresh every 5 minute
 http://www.89ip.cn/tiqu.php?tqsl=30
+
