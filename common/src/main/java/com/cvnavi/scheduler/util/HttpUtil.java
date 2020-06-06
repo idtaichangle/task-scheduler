@@ -14,6 +14,7 @@ import javax.net.ssl.SSLContext;
 
 import com.cvnavi.scheduler.proxy.ProxyProvider;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
@@ -45,6 +46,7 @@ import org.apache.http.impl.conn.DefaultRoutePlanner;
 import org.apache.http.impl.conn.DefaultSchemePortResolver;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
@@ -246,7 +248,16 @@ public class HttpUtil {
 	public static String doHttp(HttpRequestBase requestMethod, HashMap<String, String> header,
 			HashMap<String, String> cookie, HttpHost proxy, int timeout, Level level) {
 		String result = "";
-		CloseableHttpResponse resp = sendHttp(requestMethod, header, cookie, proxy, timeout, level);
+		Header[] headers=null;
+		if(header!=null && header.size()>0){
+			headers=new Header[header.size()];
+			int i=0;
+			for (Entry<String, String> entry :header.entrySet()) {
+				headers[i]=new BasicHeader(entry.getKey(), entry.getValue());
+				i++;
+			}
+		}
+		CloseableHttpResponse resp = sendHttp(requestMethod, headers, cookie, proxy, timeout, level);
 		if (resp != null) {
 			HttpEntity entity = resp.getEntity();
 			try {
@@ -266,15 +277,13 @@ public class HttpUtil {
 		return result;
 	}
 
-	public static CloseableHttpResponse sendHttp(HttpRequestBase requestMethod, HashMap<String, String> header,
+	public static CloseableHttpResponse sendHttp(HttpRequestBase requestMethod, Header[]  headers,
 			HashMap<String, String> cookie, HttpHost proxy, int timeout, Level level) {
 
 		CloseableHttpResponse response1 = null;
 
-		if (header != null && header.size() > 0) {
-			for (Entry<String, String> entry : header.entrySet()) {
-				requestMethod.setHeader(entry.getKey(), entry.getValue());
-			}
+		if (headers != null && headers.length > 0) {
+			requestMethod.setHeaders(headers);
 		}
 
 		HttpClientContext context = HttpClientContext.create();
