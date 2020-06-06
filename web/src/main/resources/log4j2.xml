@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="OFF">
 	<appenders>
-		<RollingFile name="RollingFile" fileName="${sys:SCHEDULER_HOME}/logs/ais.log"
-			filePattern="${sys:SCHEDULER_HOME}/logs/ais-%d{yyyy-MM-dd}.log.gz">
+		<RollingFile name="RollingFile" fileName="${sys:SCHEDULER_HOME}/logs/scheduler.log"
+			filePattern="${sys:SCHEDULER_HOME}/logs/scheduler-%d{yyyy-MM-dd}.log.gz">
 			<PatternLayout pattern="%d{MM-dd HH:mm:ss} %-5level %logger{1} - %L - %msg%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy />
@@ -18,6 +18,7 @@
 
 	<loggers>
 		<root level="info">
+			<appender-ref ref="RollingFile" />
 			<appender-ref ref="STDOUT" />
 		</root>
 		<logger level="ERROR" name="org.apache.http" />
