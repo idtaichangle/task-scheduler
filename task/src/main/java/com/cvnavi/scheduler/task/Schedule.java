@@ -45,4 +45,13 @@ public class Schedule {
 		}
 		return new Schedule[0];
 	}
+
+	@Override
+	public String toString() {
+		return "Schedule{" +
+				"beginTime='" + beginTime + '\'' +
+				", endTime='" + endTime + '\'' +
+				", period=" + period +
+				'}';
+	}
 }

@@ -45,17 +45,46 @@
             });
         }
     </script>
+    <style>
+        table {
+            width: 100%;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+        table th {
+            background:#b5cfd2;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+        }
+        table td {
+            background:#dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+        }}
+    </style>
 </head>
 <body>
 <table>
     <thead>
     <tr>
-        <td>名称</td><td>最后执行时间</td><td>操作</td>
+        <td>名称</td><td>执行计划</td><td>最后执行时间</td><td>操作</td>
     </tr>
     </thead>
     <tbody>
     <tr th:each="item : ${tasks}" th:data="${item.class.name}" >
-        <td th:text="${item.class.name}"></td>
+        <td th:text="${item.class.simpleName}" th:alt-title="${item.class.name}"></td>
+        <td>
+            <div th:each="item:${item.schedules}">
+                <p th:text="${item}"></p>
+            </div>
+        </td>
         <td class="time" th:text="${item.lastExeTime}"></td>
         <td><button onclick="exeTask();">立即执行</button></td>
     </tr>

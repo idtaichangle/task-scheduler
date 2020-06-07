@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -38,6 +39,7 @@ public abstract class AbstractDailyTask implements AbstractTask {
 	 */
 	boolean allowParallel=false;
 
+	@Getter
 	public Schedule[] schedules = null;
 	
 //	public Schedule[] emptySchedules = {};
