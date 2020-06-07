@@ -27,6 +27,9 @@ public class CmdExecutor {
 			cmdArray = new String[] { "cmd", "/c", cmd };
 		} else if (os.toLowerCase().equals("linux")) {
 			if(requireDisplay && GraphicsEnvironment.isHeadless()){
+				if(!existCmd("xvfb-run")){
+					log.warn("xvfb-run not found.");
+				}
 				cmdArray = new String[] { "/bin/sh", "-c",
 						"xvfb-run --server-args=\"-screen 0 1024x768x24\" -a " + cmd };
 			}else{
@@ -63,5 +66,18 @@ public class CmdExecutor {
 			log.error(e);
 			return e.getMessage();
 		}
+	}
+
+	public static boolean existCmd(String cmd){
+		String os = System.getProperty("os.name");
+		if (os.toLowerCase().contains("windows")) {
+			return false;
+		} else {
+			return execCmd(new String[]{"which",cmd}).trim().length()>0;
+		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println(existCmd("ls"));
 	}
 }
