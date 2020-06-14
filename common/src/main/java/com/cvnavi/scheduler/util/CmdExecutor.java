@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,11 +71,13 @@ public class CmdExecutor {
 
 	public static boolean existCmd(String cmd){
 		String os = System.getProperty("os.name");
-		if (os.toLowerCase().contains("windows")) {
-			return false;
-		} else {
-			return execCmd(new String[]{"which",cmd}).trim().length()>0;
+		if (os.toLowerCase().contains("linux")) {
+			String str=execCmd(new String[]{"which",cmd}).trim();
+			if(str.length()>0){
+				return !Pattern.compile("no.*"+cmd+" in").matcher(str).find();
+			}
 		}
+		return false;
 	}
 
 	public static void main(String[] args) {
