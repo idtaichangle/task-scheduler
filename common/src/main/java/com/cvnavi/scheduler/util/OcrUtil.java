@@ -11,17 +11,34 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 public class OcrUtil {
 
+    static File tessDataFolder=null;
+
     public static String doOcr(BufferedImage img) throws IOException {
+        String lang="eng";
+        HashMap<String,String> map=new HashMap<>();
+        map.put("tessedit_char_whitelist", "0123456789");
+        return doOcr(img,lang,map);
+    }
+
+    public static String doOcr(BufferedImage img, String lang, Map<String,String> tessVariable) throws IOException {
         img=optimizeImg(img);
         ITesseract te=new Tesseract();
-        File tessDataFolder = LoadLibs.extractTessResources("tessdata");
+        if(tessDataFolder==null){
+            tessDataFolder = LoadLibs.extractTessResources("tessdata");
+        }
         te.setDatapath(tessDataFolder.getAbsolutePath());
-        te.setLanguage("eng");
-        te.setTessVariable("tessedit_char_whitelist", "0123456789");
+        te.setLanguage(lang);
+        if(tessVariable!=null){
+            for (Map.Entry<String,String> entry:tessVariable.entrySet()) {
+                te.setTessVariable(entry.getKey(), entry.getValue());
+            }
+        }
         te.setPageSegMode(ITessAPI.TessPageSegMode.PSM_SINGLE_LINE);
 
         try {
