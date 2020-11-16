@@ -61,7 +61,7 @@ public class ProxyTestTask implements Runnable {
 		for (int i = 0; i < Config.proxyTestRetry; i++) {
 			success += (doTest(proxy) ? 1 : 0);
 		}
-		boolean valid = (success>=Config.proxyTestThreshould);
+		boolean valid = (success>=Config.proxyTestThreshold);
 		if (result != null) {
 			result.testComplete = true;
 			result.valid = valid;
@@ -85,9 +85,9 @@ public class ProxyTestTask implements Runnable {
 		String result = "";
 		HttpClientContext context = HttpClientContext.create();
 		RequestConfig.Builder configBuilder = RequestConfig.custom();
-		configBuilder.setConnectionRequestTimeout(800);
-		configBuilder.setConnectTimeout(800);
-		configBuilder.setSocketTimeout(800);
+		configBuilder.setConnectionRequestTimeout(Config.proxyTestTimeout);
+		configBuilder.setConnectTimeout(Config.proxyTestTimeout);
+		configBuilder.setSocketTimeout(Config.proxyTestTimeout);
 		configBuilder.setProxy(proxy);
 		context.setRequestConfig(configBuilder.build());
 		CloseableHttpResponse response1 = null;

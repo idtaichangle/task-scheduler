@@ -32,7 +32,12 @@ public class Config {
 	/**
 	 * 认为代理有效的次数。（例如，代理测试10次，至少有５次是通过测试，则认为此代理有效）
 	 */
-	public static int proxyTestThreshould = 2;
+	public static int proxyTestThreshold = 2;
+
+	/**
+	 * 代理超时
+	 */
+	public static int proxyTestTimeout = 1000;
 
 
 	public static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -45,7 +50,8 @@ public class Config {
 			proxyTestUrl = p.getProperty("proxy.test.url");
 			proxyTestKeyword = p.getProperty("proxy.test.keyword");
 			proxyTestRetry = Integer.parseInt(p.getProperty("proxy.test.retry"));
-			proxyTestThreshould = Integer.parseInt(p.getProperty("proxy.test.threshould"));
+			proxyTestThreshold = Integer.parseInt(p.getProperty("proxy.test.threshold"));
+			proxyTestTimeout = Integer.parseInt(p.getProperty("proxy.test.timeout"));
 
 			is.close();
 		} catch (IOException e) {
