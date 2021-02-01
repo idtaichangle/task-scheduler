@@ -3,32 +3,31 @@
 #https://www.xicidaili.com/nn/
 #https://www.xicidaili.com/nt/
 #https://www.xicidaili.com/wt/
-
+#http://www.66ip.cn/
+#http://www.66ip.cn/areaindex_35/1.html
 #http://www.iphai.com/free/ng
 #http://www.iphai.com/free/wg
-http://www.xsdaili.cn/dayProxy/ip/2535.html
+#https://www.kuaidaili.com/free/intr/ #transparent
+#http://www.xsdaili.cn/dayProxy/ip/2535.html
+
 https://www.kuaidaili.com/proxylist/1/
 https://www.kuaidaili.com/free/
-#https://www.kuaidaili.com/free/intr/ #transparent
 http://www.ip3366.net/
-http://www.ip3366.net/free/
 http://www.kxdaili.com/dailiip.html
-http://www.66ip.cn/
-http://www.66ip.cn/areaindex_35/1.html
 
 http://www.89ip.cn/tiqu.php?tqsl=30
 
 http://www.shenjidaili.com/product/open/
 
 http://www.nimadaili.com/http/
-http://www.data5u.com/
-http://www.site-digger.com/html/articles/20110516/proxieslist.html
+
+
 https://ip.jiangxianli.com/
-http://http.taiyangruanjian.com/free/
+http://ty-http-d.upupfile.com/index/index/get_free_ip
 https://ip.ihuan.me/
 http://wapi.http.cnapi.cc/index/index/get_free_ip
 http://www.xiladaili.com/
 
-https://premiumproxy.net/https-ssl-proxy-list
+
 https://proxypremium.top/http-proxy-list
 https://www.proxyscan.io/

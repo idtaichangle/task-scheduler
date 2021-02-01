@@ -64,7 +64,7 @@ public class HealthReport extends AbstractDailyTask {
                 new BasicHeader("Referer","https://xuhui.wechat.chennutech.com/today-record\n")
         };
 
-        String inputJson = "{\"StudentId\":109598,\"InSH\":true,\"IsOut\":false,\"IsAbroad\":false,\"IsChinese\":false,\"Place\":\"\",\"BackTime\":\"\",\"OnBackWay\":false,\"HealthStatus\":true,\"IsFever\":false,\"Reason\":[],\"Temperature\":\"\"}";
+        String inputJson = "{\"StudentId\":109598,\"InSH\":false,\"IsOut\":true,\"IsAbroad\":false,\"IsChinese\":false,\"Place\":\"重庆市荣昌区\",\"BackTime\":\"2021-02-20\",\"OnBackWay\":false,\"HealthStatus\":true,\"IsFever\":false,\"Reason\":[],\"Temperature\":\"\",\"RiskList\":[{\"IsRisk\":0,\"RiskPlace\":\"\",\"RiskRelation\":\"\",\"IsRiskAbroad\":0}]}";
         StringEntity stringEntity = new StringEntity(inputJson);
         httpPost.setEntity(stringEntity);
 

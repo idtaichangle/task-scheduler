@@ -1,4 +1,6 @@
-https://www.zdaye.com/FreeIPList.html
+#https://www.zdaye.com/FreeIPList.html
 http://www.data5u.com/
 http://www.goubanjia.com/
 #http://www.goubanjia.com/free/gnpt/index.shtml  #//透明代理
+http://www.site-digger.com/html/articles/20110516/proxieslist.html
+https://premiumproxy.net/https-ssl-proxy-list
