@@ -8,7 +8,7 @@
     <fileSets>
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
             <fileMode>0755</fileMode>
             <includes>
                 <include>bin/*</include>
@@ -16,7 +16,7 @@
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
             <includes>
                 <include>lib/*</include>
                 <include>conf/*</include>
